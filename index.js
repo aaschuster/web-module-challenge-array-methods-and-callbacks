@@ -89,7 +89,9 @@ Use the higher-order function getWinnersByYear to do the following:
  */ //current is the whole object being parsed
 
 function getWinnersByYear(array, getFinals, getYears, getWinners) {
-    
+    return (getFinals(array).map(function(current, index) {
+        return "In " + current["Year"] + ", " + getWinners(array, getFinals)[index] + " won the world cup!";
+    }))
 }
 
 getWinnersByYear(fifaData, getFinals, getYears, getWinners);
