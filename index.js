@@ -111,13 +111,9 @@ Use the higher order function `getAverageGoals` to do the following:
 */
 
 function getAverageGoals(finals) {
-    let avg = finals.reduce(function(accumulator, current) {
+    return (finals.reduce(function(accumulator, current) {
         return accumulator + current["Home Team Goals"] + current["Away Team Goals"];
-    }, 0);
-    avg /= (finals.length);
-    avg = avg.toFixed(2);
-
-    return avg;
+    }, 0)/(finals.length)).toFixed(2);
  }
 
  getAverageGoals(getFinals(fifaData));
@@ -132,11 +128,25 @@ Create a function called `getCountryWins` that takes the parameters `data` and `
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
-
-    /* code here */
-
+function getCountryWins(data, team) {
+    
+    const newData = data.filter(function(current) {
+        return current["Home Team Initials"]===team || current["Away Team Initials"]===team;
+    });
+    let wins = 0;
+    newData.forEach(function(current) {
+        if(current["Home Team Initials"]===team) {//"team" is home
+            if((current["Home Team Goals"])>(current["Away Team Goals"])) {
+                wins++; //"team" won
+            } //else do nothing
+        } else if(current["Away Team Goals"]>current["Home Team Goals"]) { //"team" is away
+            wins++; //"team" won
+        } //else do nothing
+    });
+    return wins;
 }
+
+console.log(getCountryWins(getFinals(fifaData), "ARG"));
 
 
 
